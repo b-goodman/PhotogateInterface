@@ -1,7 +1,7 @@
 # Photogate Interface
 Allows interface between Arduino photogate timer and computer.  
 
-Written in Java and using the JSSC library, it should be OS independent.  Built and tested on Windows only so far.
+Written in Java and using the JSSC library, it should be OS independent.  Built and tested on Windows.
 
 Java class allows communication over serial port allowing capture of data and device control.  Interfaces with Mathematica notebook which provides GUI controlls and live view of captured data via Java terminal.
 
