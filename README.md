@@ -1,5 +1,4 @@
-# PhotogateInterface
-
+# Photogate Interface
 Allows interface between Arduino photogate timer and computer.  
 
 Written in Java and using the JSSC library, it should be OS independent.  Built and tested on Windows only so far.
