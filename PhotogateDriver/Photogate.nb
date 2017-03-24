@@ -10,15 +10,238 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     22435,        560]
-NotebookOptionsPosition[     21992,        541]
-NotebookOutlinePosition[     22339,        556]
-CellTagsIndexPosition[     22296,        553]
+NotebookDataLength[     19683,        507]
+NotebookOptionsPosition[     19394,        493]
+NotebookOutlinePosition[     19742,        508]
+CellTagsIndexPosition[     19699,        505]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"picketFenceAnalysis", ":=", 
+    RowBox[{"(", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"analysisCalculation", "[", 
+        RowBox[{"counterData_", ",", "spacing_"}], "]"}], ":=", 
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", "\[IndentingNewLine]", 
+          RowBox[{
+          "time", ",", "distance", ",", "xyData", ",", "nlmFreefall", ",", 
+           "displacementFunction", ",", "velocityFunction", ",", 
+           "accelerationFunction"}], "\[IndentingNewLine]", "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"time", " ", "=", " ", 
+           RowBox[{"Take", "[", 
+            RowBox[{
+             RowBox[{"Flatten", "[", "counterData", "]"}], ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", 
+               RowBox[{"-", "1"}], ",", "2"}], "}"}]}], "]"}]}], ";", 
+          RowBox[{"distance", " ", "=", " ", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"j", "*", "spacing"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"j", ",", "0", ",", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Length", "[", "time", "]"}], " ", "-", " ", "1"}], 
+                ")"}]}], " ", "}"}]}], "]"}]}], ";", 
+          RowBox[{"xyData", " ", "=", " ", 
+           RowBox[{"Thread", "[", 
+            RowBox[{"{", 
+             RowBox[{"time", ",", "distance"}], "}"}], "]"}]}], ";", 
+          RowBox[{"nlmFreefall", " ", "=", " ", 
+           RowBox[{"NonlinearModelFit", "[", 
+            RowBox[{"xyData", ",", " ", 
+             RowBox[{
+              RowBox[{"a", "*", 
+               RowBox[{"z", "^", "2"}]}], " ", "+", " ", 
+              RowBox[{"b", "*", "z"}], " ", "+", " ", "c"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", "z"}], "]"}]}], 
+          ";", 
+          RowBox[{"displacementFunction", " ", "=", " ", 
+           RowBox[{"Normal", "[", "nlmFreefall", "]"}]}], ";", 
+          RowBox[{"velocityFunction", " ", "=", " ", 
+           RowBox[{"D", "[", 
+            RowBox[{"displacementFunction", ",", "z"}], "]"}]}], ";", 
+          RowBox[{"accelerationFunction", " ", "=", " ", 
+           RowBox[{"D", "[", 
+            RowBox[{"velocityFunction", ",", "z"}], "]"}]}], ";", 
+          RowBox[{"g", " ", "=", " ", 
+           RowBox[{"SetPrecision", "[", 
+            RowBox[{
+             RowBox[{"Max", "[", 
+              RowBox[{"CoefficientList", "[", 
+               RowBox[{"accelerationFunction", ",", "z"}], "]"}], "]"}], ",", 
+             "4"}], "]"}]}], ";", 
+          RowBox[{"userInTable", " ", "=", " ", 
+           RowBox[{"TableForm", "[", 
+            RowBox[{"counterData", ",", 
+             RowBox[{"TableHeadings", "->", 
+              RowBox[{"{", 
+               RowBox[{"None", ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "\"\<Count\>\"", ",", " ", "\"\<Time at Event (s)\>\""}], 
+                 "}"}]}], "}"}]}], ",", 
+             RowBox[{"TableAlignments", "->", "Center"}]}], "]"}]}], ";", 
+          RowBox[{"freefallResults", " ", "=", " ", 
+           RowBox[{"TableForm", "[", 
+            RowBox[{"xyData", ",", 
+             RowBox[{"TableHeadings", "->", 
+              RowBox[{"{", 
+               RowBox[{"None", ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "\"\<Time Elapsed (s)\>\"", ",", " ", 
+                  "\"\<Displacement (m)\>\""}], "}"}]}], "}"}]}], ",", 
+             RowBox[{"TableAlignments", "->", "Center"}]}], "]"}]}], ";", 
+          RowBox[{"plotSensorData", " ", "=", " ", 
+           RowBox[{"Show", "[", 
+            RowBox[{
+             RowBox[{"ListPlot", "[", "xyData", "]"}], ",", " ", 
+             RowBox[{"Plot", "[", 
+              RowBox[{"displacementFunction", ",", 
+               RowBox[{"{", 
+                RowBox[{"z", ",", 
+                 RowBox[{"time", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"time", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}]}], "]"}], ",", 
+             RowBox[{"Frame", "->", "True"}], ",", 
+             RowBox[{"FrameLabel", "->", " ", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"\"\<Displacemnt (m)\>\"", ",", "\"\<\>\""}], "}"}], 
+                ",", 
+                RowBox[{"{", 
+                 RowBox[{"\"\<Time (s)\>\"", ",", 
+                  RowBox[{"Style", "[", 
+                   RowBox[{"\"\<Displacement of Body in Freefall\>\"", ",", 
+                    RowBox[{"FontSize", "->", "12"}]}], "]"}]}], "}"}]}], 
+               "}"}]}]}], "]"}]}], ";", 
+          RowBox[{"plotVel", " ", "=", " ", 
+           RowBox[{"Plot", "[", 
+            RowBox[{"velocityFunction", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"z", ",", " ", "0", ",", " ", 
+               RowBox[{"time", "[", 
+                RowBox[{"[", 
+                 RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", 
+             RowBox[{"Frame", "->", "True"}], ",", " ", 
+             RowBox[{"FrameLabel", "->", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"\"\<Velocity (m/s)\>\"", ",", "\"\<\>\""}], "}"}], 
+                ",", 
+                RowBox[{"{", 
+                 RowBox[{"\"\<Time (s)\>\"", ",", " ", 
+                  RowBox[{"Style", "[", 
+                   RowBox[{"\"\<Velocity of Body in Freefall\>\"", ",", 
+                    RowBox[{"FontSize", "->", "12"}]}], "]"}]}], "}"}]}], 
+               "}"}]}]}], "]"}]}], ";", 
+          RowBox[{"plotAccel", " ", "=", 
+           RowBox[{"Plot", "[", 
+            RowBox[{"accelerationFunction", ",", " ", 
+             RowBox[{"{", 
+              RowBox[{"z", ",", "0", ",", "20"}], "}"}], ",", 
+             RowBox[{"Frame", "->", "True"}], ",", 
+             RowBox[{"FrameLabel", "->", 
+              RowBox[{"{", 
+               RowBox[{"{", 
+                RowBox[{
+                "\"\<Acceleration (m/\\!\\(\\*SuperscriptBox[\\(s\\), \
+\\(2\\)]\\))\>\"", ",", "\"\<\>\""}], "}"}], "}"}]}]}], "]"}]}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"dataInputInterface", ":=", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"CreateDialog", "[", 
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{"Column", "[", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"Row", "[", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{
+                 "TextCell", "[", "\"\<Picket Distance (m): \>\"", "]"}], ",", 
+                 RowBox[{"InputField", "[", 
+                  RowBox[{"Dynamic", "[", "spacing", "]"}], "]"}]}], 
+                "\[IndentingNewLine]", "}"}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Row", "[", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"TextCell", "[", "\"\<Sensor Data: \>\"", "]"}], ",", 
+                 RowBox[{"InputField", "[", 
+                  RowBox[{"Dynamic", "[", "counterDataOut", "]"}], "]"}]}], 
+                "\[IndentingNewLine]", "}"}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Row", "[", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"CancelButton", "[", "]"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"DefaultButton", "[", 
+                  RowBox[{
+                   RowBox[{"analysisCalculation", "[", 
+                    RowBox[{"counterDataOut", ",", "spacing"}], "]"}], ";", 
+                   "returnAnalysis"}], "]"}]}], "\[IndentingNewLine]", "}"}], 
+               "]"}]}], "\[IndentingNewLine]", "}"}], "]"}], 
+           "\[IndentingNewLine]", "}"}], "]"}], ";"}], ")"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"returnAnalysis", ":=", 
+       RowBox[{"DialogReturn", "[", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"CreateDocument", "[", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"Grid", "[", 
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Button", "[", 
+                   RowBox[{"\"\<Save\>\"", ",", " ", 
+                    RowBox[{"NotebookSave", "[", "]"}]}], "]"}], ",", " ", 
+                  RowBox[{"Button", "[", 
+                   RowBox[{"\"\<Exit\>\"", ",", 
+                    RowBox[{"DialogReturn", "[", "]"}]}], "]"}]}], "}"}], 
+                "}"}], "]"}], ",", 
+              RowBox[{"TextCell", "[", "freefallResults", "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"GraphicsRow", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                 "plotSensorData", ",", " ", "plotVel", ",", " ", 
+                  "plotAccel"}], "}"}], ",", " ", 
+                RowBox[{"ImageSize", "->", "Full"}], ",", " ", 
+                RowBox[{"Frame", "->", "True"}]}], "]"}], ",", 
+              RowBox[{"TextCell", "[", 
+               RowBox[{
+                RowBox[{"Quantity", "[", 
+                 RowBox[{"g", ",", " ", "\"\<m/s^2\>\""}], "]"}], ",", " ", 
+                RowBox[{"FontSize", "->", "12"}]}], "]"}]}], 
+             "\[IndentingNewLine]", "}"}], "]"}], ")"}], ";"}], 
+         "\[IndentingNewLine]", "}"}], "]"}]}], ";", " ", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", "dataInputInterface", 
+      ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", ")"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"classPath", "=", 
    RowBox[{"FileNameJoin", "[", 
@@ -229,19 +452,23 @@ Cell[BoxData[{
        RowBox[{"Dynamic", "[", "isConnected", "]"}]}]}], "]"}]}], ";"}], 
   "\n"}], "\n", 
  RowBox[{
-  RowBox[{
-   RowBox[{"toolbar", ":=", 
-    RowBox[{"Row", "[", 
-     RowBox[{"{", "\n", 
-      RowBox[{
-       RowBox[{"Dynamic", "@", "portSelectionMenu"}], ",", "\n", 
-       "portRefreshButton", ",", "\n", 
-       RowBox[{"Spacer", "[", "5", "]"}], ",", "\n", "connectButton", ",", 
-       "\n", 
-       RowBox[{"Spacer", "[", "5", "]"}], ",", "\n", "disconnectButton", ",", 
-       "\n", 
-       RowBox[{"Spacer", "[", "50", "]"}], ",", "\n", "printLogButton", ",", 
-       "\n", "modeSelectionMenu"}], "\n", "}"}], "]"}]}], ";"}], "\n"}], "\n", 
+  RowBox[{"toolbar", ":=", 
+   RowBox[{"Row", "[", 
+    RowBox[{"{", "\n", 
+     RowBox[{
+      RowBox[{"Dynamic", "@", "portSelectionMenu"}], ",", "\n", 
+      "portRefreshButton", ",", "\n", 
+      RowBox[{"Spacer", "[", "5", "]"}], ",", "\n", "connectButton", ",", 
+      "\n", 
+      RowBox[{"Spacer", "[", "5", "]"}], ",", "\n", "disconnectButton", ",", 
+      "\n", 
+      RowBox[{"Spacer", "[", "50", "]"}], ",", "\n", "printLogButton", ",", 
+      "\n", "modeSelectionMenu"}], "\n", "}"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.699274101923992*^9, 3.699274129359063*^9}, {
+   3.699279616092041*^9, 3.6992796513256865`*^9}, 3.6993649331049414`*^9, {
+   3.699374647102028*^9, 3.6993746739511538`*^9}}],
+
+Cell[BoxData[{
  RowBox[{"endSession", ";"}], "\n", 
  RowBox[{"initalise", ";"}], "\n", 
  RowBox[{
@@ -262,285 +489,10 @@ Cell[BoxData[{
      RowBox[{"{", 
       RowBox[{"\"\<WindowClose\>\"", ":>", 
        RowBox[{"UninstallJava", "[", "]"}]}], "}"}]}]}], "]"}], 
-  ";"}]}], "Input",
- CellChangeTimes->{{3.699274101923992*^9, 3.699274129359063*^9}, {
-  3.699279616092041*^9, 3.6992796513256865`*^9}}],
-
-Cell[BoxData[
- RowBox[{"\[IndentingNewLine]", 
-  RowBox[{
-   RowBox[{"picketFenceAnalysis", ":=", 
-    RowBox[{"DynamicModule", "[", 
-     RowBox[{
-      RowBox[{"{", "\[IndentingNewLine]", 
-       RowBox[{"g", ",", 
-        RowBox[{"spacing", "=", "0"}], ",", 
-        RowBox[{"counterDataOut", "=", 
-         RowBox[{"{", "}"}]}]}], "\[IndentingNewLine]", "}"}], ",", 
-      "\[IndentingNewLine]", 
-      RowBox[{"Block", "[", 
-       RowBox[{
-        RowBox[{"{", "\[IndentingNewLine]", 
-         RowBox[{
-         "analysisCalculation", ",", "dataInputInterface", ",", 
-          "returnAnalysis", ",", "userInTable", ",", "freefallResults", ",", 
-          "plotSensorData", ",", "plotVel", ",", "plotAccel"}], "}"}], ",", 
-        "\[IndentingNewLine]", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"analysisCalculation", "[", 
-           RowBox[{"counterData_", ",", "spacing_"}], "]"}], ":=", 
-          RowBox[{"Module", "[", 
-           RowBox[{
-            RowBox[{"{", "\[IndentingNewLine]", 
-             RowBox[{
-             "time", ",", "distance", ",", "xyData", ",", "nlmFreefall", ",", 
-              "displacementFunction", ",", "velocityFunction", ",", 
-              "accelerationFunction"}], "\[IndentingNewLine]", "}"}], ",", 
-            "\[IndentingNewLine]", 
-            RowBox[{
-             RowBox[{"time", " ", "=", " ", 
-              RowBox[{"Take", "[", 
-               RowBox[{
-                RowBox[{"Flatten", "[", "counterData", "]"}], ",", " ", 
-                RowBox[{"{", 
-                 RowBox[{"2", ",", 
-                  RowBox[{"-", "1"}], ",", "2"}], "}"}]}], "]"}]}], ";", 
-             RowBox[{"distance", " ", "=", " ", 
-              RowBox[{"Table", "[", 
-               RowBox[{
-                RowBox[{"j", "*", "spacing"}], ",", 
-                RowBox[{"{", 
-                 RowBox[{"j", ",", "0", ",", 
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"Length", "[", "time", "]"}], " ", "-", " ", 
-                    "1"}], ")"}]}], " ", "}"}]}], "]"}]}], ";", 
-             RowBox[{"xyData", " ", "=", " ", 
-              RowBox[{"Thread", "[", 
-               RowBox[{"{", 
-                RowBox[{"time", ",", "distance"}], "}"}], "]"}]}], ";", 
-             RowBox[{"nlmFreefall", " ", "=", " ", 
-              RowBox[{"NonlinearModelFit", "[", 
-               RowBox[{"xyData", ",", " ", 
-                RowBox[{
-                 RowBox[{"a", "*", 
-                  RowBox[{"z", "^", "2"}]}], " ", "+", " ", 
-                 RowBox[{"b", "*", "z"}], " ", "+", " ", "c"}], ",", 
-                RowBox[{"{", 
-                 RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", "z"}], 
-               "]"}]}], ";", 
-             RowBox[{"displacementFunction", " ", "=", " ", 
-              RowBox[{"Normal", "[", "nlmFreefall", "]"}]}], ";", 
-             RowBox[{"velocityFunction", " ", "=", " ", 
-              RowBox[{"D", "[", 
-               RowBox[{"displacementFunction", ",", "z"}], "]"}]}], ";", 
-             RowBox[{"accelerationFunction", " ", "=", " ", 
-              RowBox[{"D", "[", 
-               RowBox[{"velocityFunction", ",", "z"}], "]"}]}], ";", 
-             RowBox[{"g", " ", "=", " ", 
-              RowBox[{"SetPrecision", "[", 
-               RowBox[{
-                RowBox[{"Max", "[", 
-                 RowBox[{"CoefficientList", "[", 
-                  RowBox[{"accelerationFunction", ",", "z"}], "]"}], "]"}], 
-                ",", "4"}], "]"}]}], ";", 
-             RowBox[{"userInTable", " ", "=", " ", 
-              RowBox[{"TableForm", "[", 
-               RowBox[{"counterData", ",", 
-                RowBox[{"TableHeadings", "->", 
-                 RowBox[{"{", 
-                  RowBox[{"None", ",", 
-                   RowBox[{"{", 
-                    RowBox[{
-                    "\"\<Count\>\"", ",", " ", "\"\<Time at Event (s)\>\""}], 
-                    "}"}]}], "}"}]}], ",", 
-                RowBox[{"TableAlignments", "->", "Center"}]}], "]"}]}], ";", 
-             RowBox[{"freefallResults", " ", "=", " ", 
-              RowBox[{"TableForm", "[", 
-               RowBox[{"xyData", ",", 
-                RowBox[{"TableHeadings", "->", 
-                 RowBox[{"{", 
-                  RowBox[{"None", ",", 
-                   RowBox[{"{", 
-                    RowBox[{
-                    "\"\<Time Elapsed (s)\>\"", ",", " ", 
-                    "\"\<Displacement (m)\>\""}], "}"}]}], "}"}]}], ",", 
-                RowBox[{"TableAlignments", "->", "Center"}]}], "]"}]}], ";", 
-             RowBox[{"plotSensorData", " ", "=", " ", 
-              RowBox[{"Show", "[", 
-               RowBox[{
-                RowBox[{"ListPlot", "[", "xyData", "]"}], ",", " ", 
-                RowBox[{"Plot", "[", 
-                 RowBox[{"displacementFunction", ",", 
-                  RowBox[{"{", 
-                   RowBox[{"z", ",", 
-                    RowBox[{"time", "[", 
-                    RowBox[{"[", "1", "]"}], "]"}], ",", 
-                    RowBox[{"time", "[", 
-                    RowBox[{"[", 
-                    RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}]}], "]"}], ",", 
-                RowBox[{"Frame", "->", "True"}], ",", 
-                RowBox[{"FrameLabel", "->", " ", 
-                 RowBox[{"{", 
-                  RowBox[{
-                   RowBox[{"{", 
-                    RowBox[{"\"\<Displacemnt (m)\>\"", ",", "\"\<\>\""}], 
-                    "}"}], ",", 
-                   RowBox[{"{", 
-                    RowBox[{"\"\<Time (s)\>\"", ",", 
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<Displacement of Body in Freefall\>\"", ",", 
-                    RowBox[{"FontSize", "->", "12"}]}], "]"}]}], "}"}]}], 
-                  "}"}]}]}], "]"}]}], ";", 
-             RowBox[{"plotVel", " ", "=", " ", 
-              RowBox[{"Plot", "[", 
-               RowBox[{"velocityFunction", ",", " ", 
-                RowBox[{"{", 
-                 RowBox[{"z", ",", " ", "0", ",", " ", 
-                  RowBox[{"time", "[", 
-                   RowBox[{"[", 
-                    RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", 
-                RowBox[{"Frame", "->", "True"}], ",", " ", 
-                RowBox[{"FrameLabel", "->", 
-                 RowBox[{"{", 
-                  RowBox[{
-                   RowBox[{"{", 
-                    RowBox[{"\"\<Velocity (m/s)\>\"", ",", "\"\<\>\""}], 
-                    "}"}], ",", 
-                   RowBox[{"{", 
-                    RowBox[{"\"\<Time (s)\>\"", ",", " ", 
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<Velocity of Body in Freefall\>\"", ",", 
-                    RowBox[{"FontSize", "->", "12"}]}], "]"}]}], "}"}]}], 
-                  "}"}]}]}], "]"}]}], ";", 
-             RowBox[{"plotAccel", " ", "=", 
-              RowBox[{"Plot", "[", 
-               RowBox[{"accelerationFunction", ",", " ", 
-                RowBox[{"{", 
-                 RowBox[{"z", ",", "0", ",", "20"}], "}"}], ",", 
-                RowBox[{"Frame", "->", "True"}], ",", 
-                RowBox[{"FrameLabel", "->", 
-                 RowBox[{"{", 
-                  RowBox[{"{", 
-                   RowBox[{
-                   "\"\<Acceleration (m/\\!\\(\\*SuperscriptBox[\\(s\\), \\(2\
-\\)]\\))\>\"", ",", "\"\<\>\""}], "}"}], "}"}]}]}], "]"}]}], ";"}]}], 
-           "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
-         "\[IndentingNewLine]", 
-         RowBox[{"dataInputInterface", ":=", 
-          RowBox[{"CreateDialog", "[", 
-           RowBox[{"{", "\[IndentingNewLine]", 
-            RowBox[{"Column", "[", 
-             RowBox[{"{", "\[IndentingNewLine]", 
-              RowBox[{
-               RowBox[{"Row", "[", 
-                RowBox[{"{", "\[IndentingNewLine]", 
-                 RowBox[{
-                  RowBox[{
-                  "TextCell", "[", "\"\<Picket Distance (m): \>\"", "]"}], 
-                  ",", 
-                  RowBox[{"InputField", "[", 
-                   RowBox[{"Dynamic", "[", "spacing", "]"}], "]"}]}], 
-                 "\[IndentingNewLine]", "}"}], "]"}], ",", 
-               "\[IndentingNewLine]", 
-               RowBox[{"Row", "[", 
-                RowBox[{"{", "\[IndentingNewLine]", 
-                 RowBox[{
-                  RowBox[{"TextCell", "[", "\"\<Sensor Data: \>\"", "]"}], 
-                  ",", 
-                  RowBox[{"InputField", "[", 
-                   RowBox[{"Dynamic", "[", "counterDataOut", "]"}], "]"}]}], 
-                 "\[IndentingNewLine]", "}"}], "]"}], ",", 
-               "\[IndentingNewLine]", 
-               RowBox[{"Row", "[", 
-                RowBox[{"{", "\[IndentingNewLine]", 
-                 RowBox[{
-                  RowBox[{"CancelButton", "[", "]"}], ",", 
-                  "\[IndentingNewLine]", 
-                  RowBox[{"DefaultButton", "[", 
-                   RowBox[{
-                    RowBox[{"analysisCalculation", "[", 
-                    RowBox[{"counterDataOut", ",", "spacing"}], "]"}], ";", 
-                    "returnAnalysis"}], "]"}]}], "\[IndentingNewLine]", "}"}],
-                 "]"}]}], "\[IndentingNewLine]", "}"}], "]"}], 
-            "\[IndentingNewLine]", "}"}], "]"}]}], ";", "\[IndentingNewLine]",
-          "\[IndentingNewLine]", 
-         RowBox[{"returnAnalysis", ":=", 
-          RowBox[{"DialogReturn", "[", 
-           RowBox[{"{", "\[IndentingNewLine]", 
-            RowBox[{"CreateDocument", "[", 
-             RowBox[{"{", "\[IndentingNewLine]", 
-              RowBox[{
-               RowBox[{"Grid", "[", 
-                RowBox[{"{", 
-                 RowBox[{"{", 
-                  RowBox[{
-                   RowBox[{"Button", "[", 
-                    RowBox[{"\"\<Save\>\"", ",", " ", 
-                    RowBox[{"NotebookSave", "[", "]"}]}], "]"}], ",", " ", 
-                   RowBox[{"Button", "[", 
-                    RowBox[{"\"\<Exit\>\"", ",", 
-                    RowBox[{"DialogReturn", "[", "]"}]}], "]"}]}], "}"}], 
-                 "}"}], "]"}], ",", 
-               RowBox[{"TextCell", "[", "freefallResults", "]"}], ",", 
-               "\[IndentingNewLine]", 
-               RowBox[{"GraphicsRow", "[", 
-                RowBox[{
-                 RowBox[{"{", 
-                  RowBox[{
-                  "plotSensorData", ",", " ", "plotVel", ",", " ", 
-                   "plotAccel"}], "}"}], ",", " ", 
-                 RowBox[{"ImageSize", "->", "Full"}], ",", " ", 
-                 RowBox[{"Frame", "->", "True"}]}], "]"}], ",", 
-               RowBox[{"TextCell", "[", 
-                RowBox[{
-                 RowBox[{"Quantity", "[", 
-                  RowBox[{"g", ",", " ", "\"\<m/s^2\>\""}], "]"}], ",", " ", 
-                 RowBox[{"FontSize", "->", "12"}]}], "]"}]}], 
-              "\[IndentingNewLine]", "}"}], "]"}], "\[IndentingNewLine]", 
-            "}"}], "]"}]}], ";", " ", "\[IndentingNewLine]", 
-         "\[IndentingNewLine]", "dataInputInterface"}]}], 
-       "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}], 
-   ";"}]}]], "Input",
- CellChangeTimes->{{3.699280966159981*^9, 3.6992810094302473`*^9}, {
-   3.6992812098817377`*^9, 3.6992813585624847`*^9}, 3.699281397885399*^9, {
-   3.69928286502242*^9, 3.6992829909257307`*^9}, {3.699283250930215*^9, 
-   3.6992832866225433`*^9}, {3.6992833566682725`*^9, 
-   3.6992834183664646`*^9}, {3.6992834748657193`*^9, 
-   3.6992835628220024`*^9}, {3.6992835946823006`*^9, 3.699283647676726*^9}, {
-   3.699283743091547*^9, 3.699283748478937*^9}, {3.699283807239002*^9, 
-   3.699283823261402*^9}, {3.69928385797855*^9, 3.69928391921204*^9}, {
-   3.699283980329717*^9, 3.6992839804902525`*^9}, {3.6992840161942883`*^9, 
-   3.699284074537548*^9}, {3.6992841067819595`*^9, 3.6992841111978703`*^9}, 
-   3.6992871166281652`*^9}],
-
-Cell[BoxData[
- RowBox[{"Clear", "@", "picketFenceAnalysis"}]], "Input",
- CellChangeTimes->{{3.699283422950737*^9, 3.699283423863968*^9}, {
-  3.6992836333895626`*^9, 3.699283634580358*^9}}],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["picketFenceAnalysis"], "Input",
- CellChangeTimes->{{3.699283638135818*^9, 3.699283639106434*^9}}],
-
-Cell[BoxData[
- DynamicModuleBox[{$CellContext`g$$, $CellContext`spacing$$ = 
-  0, $CellContext`counterDataOut$$ = {}}, 
-  TemplateBox[{FrontEndObject[
-     LinkObject["78crm_shm", 3, 1]],84,
-    "FrontEndObject[LinkObject[\"78crm_shm\", 3, 1]]","84","84"},
-   "NotebookObjectUnsaved"],
-  DynamicModuleValues:>{}]], "Output",
- CellChangeTimes->{
-  3.699283651490759*^9, {3.6992837592400217`*^9, 3.699283792066986*^9}, 
-   3.6992838304072437`*^9, {3.699283927562354*^9, 3.699283931145541*^9}, 
-   3.69928398612848*^9, 3.6992840818682575`*^9}]
-}, Open  ]]
+  ";"}]}], "Input"]
 },
-WindowSize->{775, 872},
-WindowMargins->{{Automatic, 93}, {58, Automatic}},
+WindowSize->{1366, 725},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
 FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -555,13 +507,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 8733, 246, 1589, "Input"],
-Cell[9294, 268, 11812, 247, 1209, "Input"],
-Cell[21109, 517, 188, 3, 30, "Input"],
-Cell[CellGroupData[{
-Cell[21322, 524, 111, 1, 30, "Input"],
-Cell[21436, 527, 540, 11, 49, "Output"]
-}, Open  ]]
+Cell[558, 20, 18079, 448, 2216, "Input"],
+Cell[18640, 470, 750, 21, 88, "Input"]
 }
 ]
 *)
